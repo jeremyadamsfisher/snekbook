@@ -6,4 +6,4 @@ test:
 run:
 	$(MANAGE) runserver
 update_deps:
-	pipenv update --pre
+	pipenv lock --pre --dev && pipenv sync
