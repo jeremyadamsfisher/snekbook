@@ -1,7 +1,24 @@
 {% extends 'snekbook/base.html' %}
 
+{% block title%}Home{% endblock %}
+
 {% block content%}
 <div class="jumbotron">
-  <h1>Hello, world!!</h1>
+  <h1>Get you a good snake!</h1>
 </div>
+<div class="container">
+  <span>Our records show you like <b>{{ snake_number }}</b> snakes. Lets get you some more snakes!</span>
+</div>
+
+<div class="container">
+  <div class="row" style="margin-top:25px">
+    {% for snake in snakes %}
+    <div class="col-" align="center" style="margin:10px">
+      <span class="dot"></span>
+      <h5><span class="badge badge-secondary">{{snake.name}}</span></h5>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock %}
