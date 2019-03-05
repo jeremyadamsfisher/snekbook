@@ -5,3 +5,5 @@ test:
 	$(ENV) pytest --driver Chrome
 run:
 	$(MANAGE) runserver
+update_deps:
+	pipenv update --pre
