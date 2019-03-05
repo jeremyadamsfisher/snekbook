@@ -1,0 +1,12 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import pandas as pd
+
+driver = webdriver.Safari()
+driver.get("http://snakedatabase.org/pages/filterdb.php")
+driver.find_element_by_tag_name("form").submit()
+
+for row in driver.find_elements_by_xpath("//tr"):
+    print(row.text)
+    break
