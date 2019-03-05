@@ -1,3 +1,5 @@
-from django.test import TestCase
+import time
 
-# Create your tests here.
+def test_functional(selenium, live_server):
+    selenium.get(live_server.url)
+    assert "Snekbook" in selenium.title
