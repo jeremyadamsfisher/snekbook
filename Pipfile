@@ -11,7 +11,7 @@ black = "*"
 awsebcli = "*"
 
 [packages]
-django = "*"
+django = "==2.1.1"
 
 [requires]
 python_version = "3.6"
