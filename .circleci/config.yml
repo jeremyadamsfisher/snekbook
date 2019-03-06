@@ -9,7 +9,7 @@ jobs:
           name: Pipenv install dependencies
           command: |
               sudo pip install pipenv
-              pipenv install
+              pipenv install --dev
       - run:
           name: Download selenium
           command: |
