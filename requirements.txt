@@ -1,0 +1,4 @@
+-i https://pypi.org/simple
+django==2.2b1
+pytz==2018.9
+sqlparse==0.2.4

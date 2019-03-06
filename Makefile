@@ -6,6 +6,8 @@ test:
 run:
 	$(MANAGE) runserver
 update_deps:
-	pipenv lock --pre --dev && pipenv sync
+	pipenv lock --pre --dev \
+	&& pipenv sync \
+	&& pipenv lock --requirements > requirements.txt
 migrate:
 	$(MANAGE) migrate

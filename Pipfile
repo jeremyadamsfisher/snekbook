@@ -8,6 +8,7 @@ pytest = "*"
 pytest-django = "*"
 pytest-selenium = "*"
 black = "*"
+awsebcli = "*"
 
 [packages]
 django = "*"
