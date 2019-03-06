@@ -1,12 +1,84 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-import pandas as pd
+rule default:
+    input: "snake_db.csv"
 
-driver = webdriver.Safari()
-driver.get("http://snakedatabase.org/pages/filterdb.php")
-driver.find_element_by_tag_name("form").submit()
+rule download_snake_html:
+    output: temporary("snake_db.html")
+    run:
+        from selenium import webdriver
+        from bs4 import BeautifulSoup
+        import time
 
-for row in driver.find_elements_by_xpath("//tr"):
-    print(row.text)
-    break
+        driver = webdriver.Safari()
+        driver.get("http://snakedatabase.org/pages/filterdb.php")
+        driver.find_element_by_tag_name("form").submit()
+        time.sleep(5)
+
+        with open(output[0], "wt") as f:
+            f.write(driver.page_source)
+
+rule convert_snake_html_to_csv:
+    input: "snake_db.html"
+    output: temporary("snake_db_raw.csv")
+    run:
+        from bs4 import BeautifulSoup
+        import csv
+        with open(input[0]) as f, \
+            open(output[0], "wt") as f_out:
+
+            w = csv.writer(f_out)
+            w.writerow(['scientific_name', 'fangs', 'toxicity', 'rating', 'common name', 'tbl_max', '_'])
+
+            soup = BeautifulSoup(f.read(), "lxml")
+            main_table = soup.find("table", {"class": "sortable"})
+            trs = main_table.find_all("tr")
+
+            for tr in trs:
+                rec = [td.text.strip("\n") for td in tr.find_all("td") if td.text.strip("\n")]
+                if rec:
+                    w.writerow(rec)
+
+rule clean_snake_csv:
+    input: "snake_db_raw.csv"
+    output: "snake_db.csv"
+    run:
+        import csv
+        rating = {
+            '???': '???',
+            '---': 'unclear dangerousness',
+            '?🐍?': 'constrictor – unclear dangerousness',
+            '🐍': 'constrictor – considered harmless',
+            '🐍🐍': 'constrictor – harmful',
+            '🐍🐍🐍': 'constrictor – dangerous',
+            '🐍🐍🐍🐍': 'constrictor – very dangerous',
+            '🐍🐍🐍🐍🐍':'constrictor – extremely dangerous',
+            '?💀?': 'unclear dangerousness',
+            '💀': 'considered harmless',
+            '💀💀': 'harmful bite',
+            '💀💀💀': 'dangerous bite',
+            '💀💀💀💀': 'very dangerous bite',
+            '💀💀💀💀💀': 'extremely dangerous bite'
+        }
+        with open(input[0]) as f, open(output[0], "wt") as f_out:
+            db_reader = csv.DictReader(f)
+            db_writer = csv.DictWriter(f_out, fieldnames=[
+                'genus',
+                'species',
+                'fangs',
+                'toxicity',
+                'rating',
+                'common name'
+            ])
+            db_writer.writeheader()
+            for row in db_reader:
+                try:
+                    genus, species = row["scientific_name"].replace("\xa0", " ").split(" ")
+                    db_writer.writerow({
+                        "genus": genus,
+                        "species": species,
+                        "fangs": row["fangs"].replace("ref", ""),
+                        "toxicity": row["toxicity"].replace("ref", ""),
+                        "rating": rating[row["rating"].replace("ref", "")],
+                        "common name": row["common name"]
+                    })
+                except ValueError:
+                    raise ValueError("Corrupted row: {}".format(row["scientific_name"].replace("\xa0", " ").split(" ")))
