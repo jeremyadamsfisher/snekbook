@@ -7,3 +7,5 @@ run:
 	$(MANAGE) runserver
 update_deps:
 	pipenv lock --pre --dev && pipenv sync
+migrate:
+	$(MANAGE) migrate
