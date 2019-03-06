@@ -12,7 +12,6 @@ awsebcli = "*"
 
 [packages]
 django = "==2.1.1"
-dj-static = "*"
 
 [requires]
 python_version = "3.6"
