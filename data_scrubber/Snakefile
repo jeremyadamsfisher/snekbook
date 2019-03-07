@@ -1,5 +1,27 @@
-rule default:
+rule recommender_system:
     input: "snake_db.csv"
+    output: "snake_db_enriched.csv"
+    run:
+        import pandas as pd
+        from sklearn.feature_extraction.text import CountVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+
+        df = pd.read_csv(input[0])
+        soup = df.apply((lambda row: " ".join(str(elem) for elem in row if elem)), axis=1)
+        count = CountVectorizer(stop_words='english')
+        count_matrix = count.fit_transform(soup)
+        pairwise_cosine_simularity = cosine_similarity(count_matrix, count_matrix)
+
+        def get_snake_recommendations(snake_id, n=10):
+            best_snake_ids, _ = zip(*sorted(
+                enumerate(pairwise_cosine_simularity[snake_id]),
+                key=(lambda id_cos_val: id_cos_val[1]),
+                reverse=True
+            ))
+            return best_snake_ids[1:n+1]
+
+        df["recommended_snakes"] = df.reset_index()["index"].apply(get_snake_recommendations)
+        df.to_csv(output[0])
 
 rule download_snake_html:
     output: temporary("snake_db.html")
@@ -33,7 +55,7 @@ rule convert_snake_html_to_csv:
             trs = main_table.find_all("tr")
 
             for tr in trs:
-                rec = [td.text.strip("\n") for td in tr.find_all("td") if td.text.strip("\n")]
+                rec = [td.text.strip("\n").strip() for td in tr.find_all("td") if td.text.strip("\n")]
                 if rec:
                     w.writerow(rec)
 
