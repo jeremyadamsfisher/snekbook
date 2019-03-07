@@ -25,7 +25,7 @@ SECRET_KEY = "1s*hswqz(91_q5g6ci!c&33&5xr$ua2_!8(q3c#%a=8h_eo$xq"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["snek-env.an2pgtke5t.us-west-2.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["snek-env.an2pgtke5t.us-west-2.elasticbeanstalk.com", "*"]
 
 
 # Application definition

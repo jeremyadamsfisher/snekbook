@@ -21,7 +21,8 @@ rule recommender_system:
             return best_snake_ids[1:n+1]
 
         df["recommended_snakes"] = df.reset_index()["index"].apply(get_snake_recommendations)
-        df.to_csv(output[0])
+        df.columns = [col.replace(" ", "_").lower() for col in df.columns]
+        df.reset_index().to_csv(output[0], index=False)
 
 rule download_snake_html:
     output: temporary("snake_db.html")

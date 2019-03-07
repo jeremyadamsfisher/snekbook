@@ -1,4 +1,4 @@
-,genus,species,fangs,toxicity,rating,common name,recommended_snakes
+index,genus,species,fangs,toxicity,rating,common_name,recommended_snakes
 0,Acrochordus,arafurae,non-fanged,non-venomous,unclear dangerousness,Arafura file snake,"(1, 2, 2490, 3500, 3110, 3498, 3586, 2469, 2512, 2524)"
 1,Acrochordus,granulatus,non-fanged,non-venomous,unclear dangerousness,Little file snake,"(0, 2, 2490, 3500, 3110, 3498, 3586, 2469, 2512, 2524)"
 2,Acrochordus,javanicus,non-fanged,non-venomous,unclear dangerousness,Elephant Trunk Snake,"(0, 1, 3110, 3498, 3586, 3085, 2469, 2490, 2512, 2524)"
