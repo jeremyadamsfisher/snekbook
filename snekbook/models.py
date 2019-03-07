@@ -7,7 +7,7 @@ class Post(models.Model):
     toxicity = models.TextField()
     rating = models.TextField()
     common_name = models.TextField()
-    recommended_snakes = models.TextField()
+    recommended_snakes = models.ForeignKey('self', on_delete=models.CASCADE)
 
     def __str__(self):
         return " ".join((self.genus, self.species))
