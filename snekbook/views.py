@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import Snake
 
 def index(request):
@@ -11,12 +11,16 @@ def index(request):
     )
 
 def detail(request, snake_id):
-    snake = Snake.objects.get(pk=snake_id)
+    message = None
+    if request.method == "POST":
+        message = "Thanks for liking this snake!"
+    snake = get_object_or_404(Snake, pk=snake_id)
     return render(
         request,
         "snekbook/detail.html",
         {
             "snake": snake,
-            "recommended_snakes": snake.recommended_snakes.all()
+            "recommended_snakes": snake.recommended_snakes.all(),
+            "message": message
         }
     )

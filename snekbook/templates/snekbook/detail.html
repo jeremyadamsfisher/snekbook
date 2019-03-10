@@ -2,7 +2,12 @@
 {% load static %}
 {% block title%}{{snake.common_name}}{% endblock %}
 
-{% block content%}
+{% block content %}
+
+{% if message %}
+{{ message }}
+{% endif %}
+
 <div class="center" style="margin:25px">
   <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:350px;width:350px;display:inline-block">
 </div>
@@ -20,7 +25,12 @@
       <td>{{snake.genus}}</td>
       <td>{{snake.species}}</td>
       <td>{{snake.common_name}}</td>
-      <td><button type="button" class="btn btn-primary">like</button></td>
+      <td>
+        <form action="{% url 'detail' snake.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Like" class="btn btn-primary">
+        </form>
+      </td>
     </tr>
   </tbody>
 </table>
