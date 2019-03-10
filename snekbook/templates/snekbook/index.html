@@ -1,22 +1,24 @@
 {% extends 'snekbook/base.html' %}
-
+{% load static %}
 {% block title%}Home{% endblock %}
-
 {% block content%}
-<div class="jumbotron">
-  <h1>Get you a good snake!</h1>
-  <hr>
-  <span>Our records show you like <b>{{ snake_number }}</b> snakes. Lets get you some more snakes!</span>
-</div>
-
-<div class="container">
-  <div class="row" style="margin-top:25px">
-    {% for snake in snakes %}
-    <div class="col-" align="center" style="margin:10px">
-      <span class="dot"></span>
-      <h5><span class="badge badge-secondary">{{snake.name}}</span></h5>
+<div class="container" style="margin-top:150px;">
+  <div class="row">
+    <div class="col-4">
+      <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="">
     </div>
-    {% endfor %}
+    <div class="col-8">
+      <div class="jumbotron">
+        <h1>Get you a good snake!</h1>
+        <hr>
+        <div>
+          Our records show you like <b>{{ snake_number }}</b> snakes. Lets get you some more snakes!
+        </div>
+        <div style="margin-top:25px">
+          <button type="button" class="btn btn-primary">Go like some sneken</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

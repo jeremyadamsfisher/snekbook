@@ -1,0 +1,52 @@
+{% extends 'snekbook/base.html' %}
+{% load static %}
+{% block title%}{{snake.common_name}}{% endblock %}
+
+{% block content%}
+<div class="center" style="margin:25px">
+  <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:350px;width:350px;display:inline-block">
+</div>
+<table class="table table-dark center">
+  <thead>
+    <tr>
+      <th>Genus</th>
+      <th>Species</th>
+      <th>Common Name</th>
+      <th>🐍</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr valign="middle">
+      <td>{{snake.genus}}</td>
+      <td>{{snake.species}}</td>
+      <td>{{snake.common_name}}</td>
+      <td><button type="button" class="btn btn-primary">like</button></td>
+    </tr>
+  </tbody>
+</table>
+<div class="container" style="padding:25px">
+  {% for recommended_snake in recommended_snakes %}
+  <a href="/{{recommended_snake.id}}" class="badge badge-pill badge-primary ">{{recommended_snake.common_name}}</a>
+  {% endfor %}
+</div>
+<form>
+  <div class="form-group">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <button type="button" class="btn btn-light">Comment</button>
+</form>
+<table class="table" style="margin-top:30px">
+  <col width="20%">
+  <col width="80%">
+  <tbody>
+    <tr>
+      <td>Mark</td>
+      <td>Sssss!</td>
+    </tr>
+    <tr>
+      <td>Susannah</td>
+      <td>sss SSSssssss</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

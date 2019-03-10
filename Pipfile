@@ -9,6 +9,7 @@ pytest-django = "*"
 pytest-selenium = "*"
 black = "*"
 awsebcli = "*"
+pylint = "*"
 
 [packages]
 django = "==2.1.1"
