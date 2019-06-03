@@ -5,18 +5,15 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('snekbook', '0004_auto_20190307_0559'),
-    ]
+    dependencies = [("snekbook", "0004_auto_20190307_0559")]
 
     operations = [
-        migrations.RemoveField(
-            model_name='snake',
-            name='recommended_snakes',
-        ),
+        migrations.RemoveField(model_name="snake", name="recommended_snakes"),
         migrations.AddField(
-            model_name='snake',
-            name='recommended_snakes',
-            field=models.ManyToManyField(related_name='_snake_recommended_snakes_+', to='snekbook.Snake'),
+            model_name="snake",
+            name="recommended_snakes",
+            field=models.ManyToManyField(
+                related_name="_snake_recommended_snakes_+", to="snekbook.Snake"
+            ),
         ),
     ]

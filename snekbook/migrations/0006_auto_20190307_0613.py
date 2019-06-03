@@ -6,8 +6,9 @@ from django.db import migrations
 import csv
 from ast import literal_eval
 
+
 def populate_snakes(apps, schema_editor):
-    Snake = apps.get_model('snekbook', 'Snake')
+    Snake = apps.get_model("snekbook", "Snake")
 
     with open("data_scrubber/snake_db_enriched.csv") as f:
         snake_db_reader = csv.DictReader(f)
@@ -20,11 +21,12 @@ def populate_snakes(apps, schema_editor):
                 fangs=snake["fangs"],
                 toxicity=snake["toxicity"],
                 rating=snake["rating"],
-                common_name=snake["common_name"]
+                common_name=snake["common_name"],
             )
             s.save()
-            django_id_to_recommended_snake_idx[s.id] = \
-                literal_eval(snake["recommended_snakes"])
+            django_id_to_recommended_snake_idx[s.id] = literal_eval(
+                snake["recommended_snakes"]
+            )
         # second pass; assign recommended_snakes
         for s in Snake.objects.all():
             s.recommended_snakes.set(
@@ -32,12 +34,9 @@ def populate_snakes(apps, schema_editor):
             )
             s.save()
 
+
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('snekbook', '0005_auto_20190307_0613'),
-    ]
+    dependencies = [("snekbook", "0005_auto_20190307_0613")]
 
-    operations = [
-        migrations.RunPython(populate_snakes),
-    ]
+    operations = [migrations.RunPython(populate_snakes)]

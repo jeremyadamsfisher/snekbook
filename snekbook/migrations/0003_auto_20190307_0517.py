@@ -5,14 +5,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     atomic = False
-    
-    dependencies = [
-        ('snekbook', '0002_auto_20190307_0513'),
-    ]
 
-    operations = [
-        migrations.RenameModel(
-            old_name='Post',
-            new_name='Snake',
-        ),
-    ]
+    dependencies = [("snekbook", "0002_auto_20190307_0513")]
+
+    operations = [migrations.RenameModel(old_name="Post", new_name="Snake")]

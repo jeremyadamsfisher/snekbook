@@ -7,21 +7,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('genus', models.TextField()),
-                ('species', models.TextField()),
-                ('fangs', models.TextField()),
-                ('toxicity', models.TextField()),
-                ('rating', models.TextField()),
-                ('common_name', models.TextField()),
-                ('recommended_snakes', models.TextField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("genus", models.TextField()),
+                ("species", models.TextField()),
+                ("fangs", models.TextField()),
+                ("toxicity", models.TextField()),
+                ("rating", models.TextField()),
+                ("common_name", models.TextField()),
+                ("recommended_snakes", models.TextField()),
             ],
-        ),
+        )
     ]
