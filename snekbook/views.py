@@ -2,6 +2,11 @@ from django.shortcuts import get_object_or_404, render
 from .models import Snake
 
 
+fake_comments = [
+    {"author": "Mark", "content": "Ssssss!"},
+]
+
+
 def index(request):
     return render(request, "snekbook/index.html", {"snake_number": 2})
 
@@ -18,5 +23,6 @@ def detail(request, snake_id):
             "snake": snake,
             "recommended_snakes": snake.recommended_snakes.all(),
             "message": message,
+            "comments": fake_comments,
         },
     )

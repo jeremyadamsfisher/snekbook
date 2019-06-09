@@ -45,18 +45,18 @@
   </div>
   <button type="button" class="btn btn-light">Comment</button>
 </form>
+{% if comments %}
 <table class="table" style="margin-top:30px">
   <col width="20%">
   <col width="80%">
   <tbody>
+    {% for comment in comments %}
     <tr>
-      <td>Mark</td>
-      <td>Sssss!</td>
+      <td>{% comment["author"] %}</td>
+      <td>{% comment["text"] %}</td>
     </tr>
-    <tr>
-      <td>Susannah</td>
-      <td>sss SSSssssss</td>
-    </tr>
+    {% endfor %}
   </tbody>
 </table>
+{% endif %}
 {% endblock %}
