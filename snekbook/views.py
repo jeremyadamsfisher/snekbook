@@ -3,7 +3,7 @@ from .models import Snake
 
 
 fake_comments = [
-    {"author": "Mark", "content": "Ssssss!"},
+    {"author": "Mark", "text": "Ssssss!"},
 ]
 
 
