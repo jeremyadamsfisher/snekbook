@@ -1,0 +1,30 @@
+{% extends 'snekbook/base.html' %}
+{% load static %}
+{% block title%}Sneks{% endblock %}
+
+{% block content %}
+<table class="table center table-dark">
+  <thead>
+    <tr>
+      <th>Genus, Species</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for snake in snakes %}
+    <tr>
+      <td><a href="/detail/{{snake.pk}}">{{snake.genus}} {{snake.species}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<span>
+    {% if cursor_left %}
+    <a class="btn btn-light" href="/list/{{cursor_left}}">Left</a>
+    {% endif %}
+    {% if cursor_right %}
+    <a class="btn btn-light" href="/list/{{cursor_right}}">Right</a>
+    {% endif %}
+</span>
+
+{% endblock %}

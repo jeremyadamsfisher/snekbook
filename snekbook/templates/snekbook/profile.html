@@ -1,0 +1,30 @@
+{% extends 'snekbook/base.html' %}
+{% load static %}
+{% block title%}{{thisuser.username}}{% endblock %}
+
+{% block content %}
+<h1>{{thisuser.username}}'s Sneks</h1>
+<table class="table center table-dark">
+  <thead>
+    <tr>
+      <th>Species</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for snake in snakes %}
+    <tr>
+      <td>
+        <a href="/detail/{{snake.pk}}">{{snake.genus}} {{snake.species}}</a>
+      </td>
+      <td>
+        <form form action="{% url 'unlike' snake.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="X" class="btn btn-primary">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

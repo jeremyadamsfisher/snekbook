@@ -3,11 +3,6 @@
 {% block title%}{{snake.common_name}}{% endblock %}
 
 {% block content %}
-
-{% if message %}
-{{ message }}
-{% endif %}
-
 <div class="center" style="margin:25px">
   <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:350px;width:350px;display:inline-block">
 </div>
@@ -25,25 +20,24 @@
       <td>{{snake.genus}}</td>
       <td>{{snake.species}}</td>
       <td>{{snake.common_name}}</td>
-      <td>
-        <form action="{% url 'detail' snake.id %}" method="post">
-          {% csrf_token %}
-          <input type="submit" value="Like" class="btn btn-primary">
-        </form>
-      </td>
+      <td><span class="badge badge-pill badge-primary">Likes: {{likes}}</span></td>
     </tr>
   </tbody>
 </table>
+<h3>Recommended Snakes</h3>
 <div class="container" style="padding:25px">
   {% for recommended_snake in recommended_snakes %}
-  <a href="/{{recommended_snake.id}}" class="badge badge-pill badge-primary ">{{recommended_snake.common_name}}</a>
+  <a href="/detail/{{recommended_snake.id}}" class="badge badge-pill badge-primary ">{{recommended_snake.common_name}}</a>
   {% endfor %}
 </div>
-<form>
-  <div class="form-group">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+<h3>Comments</h3>
+<form form action="{% url 'comment' snake.id %}" method="post">
+    {% csrf_token %}
+  <div class="form-group" >
+    <textarea class="form-control" rows="3"></textarea>
   </div>
-  <button type="button" class="btn btn-light">Comment</button>
+  <input type="submit" value="Comment" class="btn btn-light">
+  <a href="{% url 'like' snake.id %}" class="btn btn-primary">Like</a>
 </form>
 {% if comments %}
 <table class="table" style="margin-top:30px">
@@ -52,7 +46,7 @@
   <tbody>
     {% for comment in comments %}
     <tr>
-      <td>{{comment.author}}</td>
+      <td><a href="/profile/{{comment.author.id}}">{{comment.author}}</a></td>
       <td>{{comment.text}}</td>
     </tr>
     {% endfor %}

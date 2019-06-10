@@ -10,4 +10,9 @@ update_deps:
 	&& pipenv sync \
 	&& pipenv lock --requirements > requirements.txt
 migrate:
-	$(MANAGE) migrate
+	for app in snekbook admin ; do \
+		$(MANAGE) migrate "$$app" ; \
+	done
+makemigrations:
+	$(MANAGE) makemigrations
+makeandmigrate: makemigrations migrate
