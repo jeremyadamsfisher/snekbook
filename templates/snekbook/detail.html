@@ -50,11 +50,11 @@
   {% csrf_token %}
   {{ form.non_field_errors }}
   <div class="form-group fieldWrapper">
-      {{ form.comment.errors }}
       {{ form.comment }}
+      {{ form.comment.errors }}
   </div>
   <input type="submit" value="Comment" name="__comment__" class="btn btn-light">
-  <input type="submit" value="Like" name="__like__" class="btn btn-primary">
+  <a class="btn btn-primary" href="{% url 'like' snake.pk 'detail' %}">Like</a>
 </form>
 {% else %}
 Please <a href="{% url 'login' %}">login</a> to comment.

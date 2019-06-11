@@ -18,7 +18,7 @@
         <a href="/detail/{{snake.pk}}">{{snake.genus}} {{snake.species}}</a>
       </td>
       <td>
-        <form form action="{% url 'unlike' snake.id %}" method="post">
+        <form form action="{% url 'unlike' snake.id 'profile' %}" method="post">
           {% csrf_token %}
           <input type="submit" value="X" class="btn btn-primary">
         </form>

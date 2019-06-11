@@ -50,9 +50,7 @@ def list(request, cursor):
 def detail(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     if request.method == "POST":
-        if '__like__' in request.POST:
-            request.user.snake_set.add(snake)
-        elif '__comment__':
+        if '__comment__' in request.POST:
             form = CommentForm(request.POST)
             if form.is_valid():
                 Comment(
@@ -75,7 +73,13 @@ def detail(request, snake_id):
     )
 
 
-def unlike_snake(request, snake_id):
+def like_snake(request, snake_id, redirect_url):
+    snake = get_object_or_404(Snake, pk=snake_id)
+    request.user.snake_set.add(snake)
+    return redirect(f"/{redirect_url}/{snake_id}")
+
+
+def unlike_snake(request, snake_id, redirect_url):
     snake = get_object_or_404(Snake, pk=snake_id)
     request.user.snake_set.remove(snake)
-    return redirect(f"/profile/{request.user.pk}")
+    return redirect(redirect_url)
