@@ -1,30 +1,33 @@
 {% extends 'snekbook/base.html' %}
 {% load static %}
-{% block title%}Sneks{% endblock %}
+{% block title%}sneks{% endblock %}
 
 {% block content %}
-<table class="table center table-dark">
-  <thead>
-    <tr>
-      <th>Genus, Species</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for snake in snakes %}
-    <tr>
-      <td><a href="/detail/{{snake.pk}}">{{snake.genus}} {{snake.species}}</a></td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
 
-<span>
-    {% if cursor_left %}
-    <a class="btn btn-light" href="/list/{{cursor_left}}">Left</a>
-    {% endif %}
-    {% if cursor_right %}
-    <a class="btn btn-light" href="/list/{{cursor_right}}">Right</a>
-    {% endif %}
-</span>
-
+{% for snake_group in snake_groups %}
+<div class="row" style="margin: 25px">
+  {% for snake in snake_group %}
+  <div class="col-sm-3">
+    <div class="card">
+      <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text">
+          <a href="{% url 'detail' snake.id %}" class="text-muted">{{snake.common_name}}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {% if cursor_left_enabled %} disabled{% endif %}">
+      <a class="page-link" href="{% url 'list' cursor_left %}">Previous</a>
+    </li>
+    <li class="page-item{% if not cursor_right_enabled %} disabled{% endif %}">
+      <a class="page-link" href="{% url 'list' cursor_right %}">Next</a>
+    </li>
+  </ul>
+</nav>
 {% endblock %}

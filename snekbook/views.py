@@ -24,16 +24,22 @@ def profile(request, user_id):
 def list(request, cursor):
     snakes = Snake.objects.all()
     num_snakes = Snake.objects.count()
-    num_results = 15
+    num_snakes_per_row = 4
+    num_results = num_snakes_per_row * 2
+
+    def grouped(l, n):
+        for i in range(0, len(l), n):
+            yield l[i:i+n]
+    
     return render(
         request,
         "snekbook/list.html",
         {
-            "snakes": snakes[cursor : cursor + num_results],
-            "cursor_left": None if cursor == 0 else cursor - num_results,
-            "cursor_right": None
-            if num_snakes < cursor + num_results
-            else cursor + num_results,
+            "snake_groups": grouped(snakes[cursor : cursor + num_results], 4),
+            "cursor_left_enabled": cursor - num_results < 0,
+            "cursor_left": cursor - num_results if 0 < cursor - num_results else 0,
+            "cursor_right_enabled": True,
+            "cursor_right": cursor + num_results,
         },
     )
 
