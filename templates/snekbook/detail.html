@@ -1,6 +1,6 @@
 {% extends 'snekbook/base.html' %}
 {% load static %}
-{% block title%}{{snake.common_name}}{% endblock %}
+{% block title%}{{snake.common_name | lower}}{% endblock %}
 
 {% block content %}
 <div class="center" style="margin:25px">
@@ -46,13 +46,15 @@
 </table>
 {% endif %}
 {% if user.is_authenticated %}
-<form form action="{% url 'comment' snake.id %}" method="post">
-    {% csrf_token %}
-  <div class="form-group" >
-    <textarea class="form-control" rows="3"></textarea>
+<form form method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <div class="form-group fieldWrapper">
+      {{ form.comment.errors }}
+      {{ form.comment }}
   </div>
-  <input type="submit" value="Comment" class="btn btn-light">
-  <a href="{% url 'like' snake.id %}" class="btn btn-primary">Like</a>
+  <input type="submit" value="Comment" name="__comment__" class="btn btn-light">
+  <input type="submit" value="Like" name="__like__" class="btn btn-primary">
 </form>
 {% else %}
 Please <a href="{% url 'login' %}">login</a> to comment.

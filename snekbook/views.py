@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Count
 from django.contrib.auth import get_user_model
+
+
 from .models import Snake, Comment
+from .forms import CommentForm
 
 
 def index(request):
@@ -46,6 +49,19 @@ def list(request, cursor):
 
 def detail(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
+    if request.method == "POST":
+        if '__like__' in request.POST:
+            request.user.snake_set.add(snake)
+        elif '__comment__':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                Comment(
+                    snake=snake,
+                    author=request.user,
+                    text=form.cleaned_data['comment'],
+                ).save()
+    else:
+        form = CommentForm()
     return render(
         request,
         "snekbook/detail.html",
@@ -54,24 +70,12 @@ def detail(request, snake_id):
             "recommended_snakes": snake.recommended_snakes.all(),
             "likes": snake.likers.count(),
             "comments": snake.comments.all(),
+            "form": form,
         },
     )
-
-
-def like_snake(request, snake_id):
-    snake = get_object_or_404(Snake, pk=snake_id)
-    request.user.snake_set.add(snake)
-    return redirect(f"/detail/{snake_id}")
 
 
 def unlike_snake(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     request.user.snake_set.remove(snake)
     return redirect(f"/profile/{request.user.pk}")
-
-
-def comment_snake(request, snake_id):
-    new_comment = Comment(
-        snake=get_object_or_404(Snake, pk=snake_id), author=request.user, text="???"
-    ).save()
-    return redirect(f"/detail/{snake_id}")
