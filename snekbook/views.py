@@ -8,7 +8,6 @@ def index(request):
     return render(
         request,
         "snekbook/index.html",
-        {"snake_number": request.user.snake_set.count()}
     )
 
 
