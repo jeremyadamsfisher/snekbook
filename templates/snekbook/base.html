@@ -13,7 +13,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="d-flex flex-grow-1">
           <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-          <a class="navbar-brand" href="#">🐍book</a>
+          <a class="navbar-brand" href="{% url 'home' %}">🐍book</a>
           <div class="w-100 text-right">
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNavbar7">
                   <span class="navbar-toggler-icon"></span>
@@ -24,10 +24,10 @@
           <ul class="navbar-nav ml-auto flex-nowrap">
             {% if user.is_authenticated %}
               <li class="nav-item">
-                <a href="/list/0" class="nav-link{% if 'list' in request.path %} active{% endif %}"><i class="fa fa-list"></i> list</a>
+                <a href="{% url 'list' 0 %}" class="nav-link{% if 'list' in request.path %} active{% endif %}"><i class="fa fa-list"></i> list</a>
               </li>
               <li class="nav-item">
-                <a href="/profile/{{user.pk}}" class="nav-link {% if 'profile' in request.path %} active{% endif %}"><i class="fa fa-user"></i> {{ user.username }}</a>
+                <a href="{% url 'profile' user.pk %}" class="nav-link {% if 'profile' in request.path %} active{% endif %}"><i class="fa fa-user"></i> {{ user.username }}</a>
               </li>
               <li class="nav-item">
                 <a href="{% url 'logout' %}" class="nav-link">logout</a>
@@ -37,8 +37,8 @@
               <a href="{% url 'login' %}" class="nav-link">login</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">register</a>
-              </li>
+              <a href="#" class="nav-link">register</a>
+            </li>
             {% endif %}
           </ul>
       </div>
