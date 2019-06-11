@@ -22,11 +22,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-ROOT_URLCONF = "supersnekbook.urls"
+ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "supersnekbook", 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "config", 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -38,7 +38,7 @@ TEMPLATES = [
         },
     }
 ]
-WSGI_APPLICATION = "supersnekbook.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
