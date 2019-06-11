@@ -7,15 +7,17 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('snekbook', '0008_comment_user'),
-    ]
+    dependencies = [("snekbook", "0008_comment_user")]
 
     operations = [
         migrations.AddField(
-            model_name='comment',
-            name='author',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="comment",
+            name="author",
+            field=models.ForeignKey(
+                default=None,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
-        ),
+        )
     ]

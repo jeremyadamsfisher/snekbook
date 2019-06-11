@@ -10,5 +10,5 @@ urlpatterns = [
     path("unlike/<int:snake_id>/", views.unlike_snake, name="unlike"),
     path("comment/<int:snake_id>/", views.comment_snake, name="comment"),
     path("list/<int:cursor>", views.list, name="list"),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

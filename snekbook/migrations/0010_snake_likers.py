@@ -6,14 +6,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('snekbook', '0009_comment_author'),
-    ]
+    dependencies = [("snekbook", "0009_comment_author")]
 
     operations = [
         migrations.AddField(
-            model_name='snake',
-            name='likers',
+            model_name="snake",
+            name="likers",
             field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
-        ),
+        )
     ]

@@ -2,11 +2,13 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
 from django.db import models
 
+
 class User(AbstractUser):
     bio = models.TextField(max_length=500, blank=True)
 
+
 class Snake(models.Model):
-    list_display = ('genus', 'species',)
+    list_display = ("genus", "species")
     genus = models.CharField(max_length=200)
     species = models.CharField(max_length=200)
     fangs = models.CharField(max_length=200)
@@ -19,9 +21,12 @@ class Snake(models.Model):
     def __str__(self):
         return " ".join((self.genus, self.species))
 
+
 class Comment(models.Model):
-    list_display = ('text',)
-    snake = models.ForeignKey('snekbook.Snake', on_delete=models.CASCADE, related_name='comments')
+    list_display = ("text",)
+    snake = models.ForeignKey(
+        "snekbook.Snake", on_delete=models.CASCADE, related_name="comments"
+    )
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True, blank=True)

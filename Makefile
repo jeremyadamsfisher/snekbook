@@ -15,3 +15,5 @@ migrate:
 makemigrations:
 	$(MANAGE) makemigrations
 makeandmigrate: makemigrations migrate
+black:
+	$(PY) black .

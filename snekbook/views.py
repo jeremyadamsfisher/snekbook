@@ -5,10 +5,7 @@ from .models import Snake, Comment
 
 
 def index(request):
-    return render(
-        request,
-        "snekbook/index.html",
-    )
+    return render(request, "snekbook/index.html")
 
 
 def profile(request, user_id):
@@ -19,8 +16,8 @@ def profile(request, user_id):
         {
             "snakes": request.user.snake_set.all(),
             "thisuser": this_user,
-            "allow_deletes": this_user == request.user
-        }
+            "allow_deletes": this_user == request.user,
+        },
     )
 
 
@@ -32,10 +29,12 @@ def list(request, cursor):
         request,
         "snekbook/list.html",
         {
-            "snakes": snakes[cursor:cursor + num_results],
+            "snakes": snakes[cursor : cursor + num_results],
             "cursor_left": None if cursor == 0 else cursor - num_results,
-            "cursor_right": None if num_snakes < cursor + num_results else cursor + num_results,
-        }
+            "cursor_right": None
+            if num_snakes < cursor + num_results
+            else cursor + num_results,
+        },
     )
 
 
@@ -48,7 +47,7 @@ def detail(request, snake_id):
             "snake": snake,
             "recommended_snakes": snake.recommended_snakes.all(),
             "likes": snake.likers.count(),
-            "comments": snake.comments.all()
+            "comments": snake.comments.all(),
         },
     )
 
@@ -58,6 +57,7 @@ def like_snake(request, snake_id):
     request.user.snake_set.add(snake)
     return redirect(f"/detail/{snake_id}")
 
+
 def unlike_snake(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     request.user.snake_set.remove(snake)
@@ -66,8 +66,6 @@ def unlike_snake(request, snake_id):
 
 def comment_snake(request, snake_id):
     new_comment = Comment(
-        snake=get_object_or_404(Snake, pk=snake_id),
-        author=request.user,
-        text="???",
+        snake=get_object_or_404(Snake, pk=snake_id), author=request.user, text="???"
     ).save()
     return redirect(f"/detail/{snake_id}")
