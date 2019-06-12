@@ -3,59 +3,89 @@
 {% block title%}{{snake.common_name | lower}}{% endblock %}
 
 {% block content %}
-<div class="center" style="margin:25px">
-  <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:350px;width:350px;display:inline-block">
-</div>
-<table class="table table-dark center">
-  <thead>
-    <tr>
-      <th>Genus</th>
-      <th>Species</th>
-      <th>Common Name</th>
-      <th>🐍</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr valign="middle">
-      <td>{{snake.genus}}</td>
-      <td>{{snake.species}}</td>
-      <td>{{snake.common_name}}</td>
-      <td><span class="badge badge-pill badge-primary">Likes: {{likes}}</span></td>
-    </tr>
-  </tbody>
-</table>
-<h3>Recommended Snakes</h3>
-<div class="container" style="padding:25px">
-  {% for recommended_snake in recommended_snakes %}
-  <a href="{% url 'detail' recommended_snake.id %}" class="badge badge-pill badge-primary ">{{recommended_snake.common_name}}</a>
-  {% endfor %}
-</div>
-<h3>Comments</h3>
-{% if comments %}
-<table class="table" style="margin-top:30px">
-  <col width="20%">
-  <col width="80%">
-  <tbody>
-    {% for comment in comments %}
-    <tr>
-      <td><a href="{% url 'profile' comment.author.id %}">{{comment.author}}</a></td>
-      <td>{{comment.text}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endif %}
-{% if user.is_authenticated %}
-<form form method="post">
-  {% csrf_token %}
-  {{ form.non_field_errors }}
-  <div class="form-group fieldWrapper">
-      {{ form.comment }}
-      {{ form.comment.errors }}
+<div class="row align-items-center px-lg-5 padder-div">
+  <div class="col-sm-4">
+    <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:250px;width:250px;display:inline-block">
   </div>
-  <input type="submit" value="Comment" name="__comment__" class="btn btn-light">
-  <a class="btn btn-primary" href="{% url 'like' snake.pk 'detail' %}">Like</a>
-</form>
+  <div class="col-sm-8">
+    <table class="table table-dark" style="text-align:center">
+        <thead>
+          <tr>
+            <th>Genus</th>
+            <th>Species</th>
+            <th>Common Name</th>
+            <th>🐍</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr valign="middle">
+            <td>{{snake.genus}}</td>
+            <td>{{snake.species}}</td>
+            <td>{{snake.common_name}}</td>
+            <td><span class="badge badge-pill badge-primary">Likes: {{likes}}</span></td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+<div class="row px-lg-5 padder-div">
+  <div class="col-12">
+    {% if comments %}
+    <table class="table" style="margin-top:30px">
+      <col width="20%">
+      <col width="80%">
+      <tbody>
+        {% for comment in comments %}
+        <tr>
+          <td><a href="{% url 'profile' comment.author.id %}">{{comment.author}}</a></td>
+          <td>{{comment.text}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <form form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="form-group fieldWrapper">
+          {{ form.comment }}
+          {% if form.comment.errors %}
+            <div class="alert alert-warning" role="alert" style="margin-top:10px;margin-bottom:10px;padding-top:25px">
+              <div class="row">
+                <div class="col-10">
+                  {{ form.comment.errors }}
+                </div>
+                <div class="col-2">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+      </div>
+      <input type="submit" value="Comment" name="__comment__" class="btn btn-light">
+      <a class="btn btn-primary" href="{% url 'like' snake.pk 'detail' %}">Like</a>
+    </form>
+  </div>
+</div>
+<div class="row px-lg-5 padder-div">
+    <div class="col-12">
+      <div class="card">
+          <h6 class="card-header">similar sneks</h6>
+          <div class="card-body" style="column-count: 3">
+            <ul class="naked-list">
+                {% for recommended_snake in recommended_snakes %}
+                <li>
+                  <a href="{% url 'detail' recommended_snake.id %}" class="card-text">{{recommended_snake.common_name}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+          </div>
+        </div>
+    </div>
+  </div>
 {% else %}
 Please <a href="{% url 'login' %}">login</a> to comment.
 {% endif %}

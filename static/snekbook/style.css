@@ -1,8 +1,8 @@
 .profile {
   border-radius: 50%;
 }
-.center {
-  text-align: center;
+.container { 
+  position: relative;
 }
 .login-form {
   width: 380px;
@@ -15,9 +15,16 @@
   padding: 30px;
 }
 .login-form h2 {
-    margin: 0 0 15px;
+  margin: 0 0 15px;
 }
 .form-control, .btn {
-    min-height: 38px;
-    border-radius: 2px;
+  min-height: 38px;
+  border-radius: 2px;
+}
+.naked-list {
+  list-style: none;
+  padding-left: 0;
+}
+.padder-div {
+  padding: 15px;
 }
