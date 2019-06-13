@@ -81,7 +81,7 @@
           <div class="card-body row">
             {% for recommended_snake_group in recommended_snake_groups %}
             <div class="col-sm-4 naked">
-              <ul class="list-unstyled" align="center">
+              <ul>
               {% for recommended_snake in recommended_snake_group %}
                 <li>
                   <a href="{% url 'detail' recommended_snake.id %}" class="card-text">{{recommended_snake.common_name}}</a>
