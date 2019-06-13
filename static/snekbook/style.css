@@ -21,10 +21,22 @@
   min-height: 38px;
   border-radius: 2px;
 }
+.form-control ul {
+  min-height: 38px;
+  border-radius: 2px;
+}
 .naked-list {
   list-style: none;
   padding-left: 0;
 }
 .padder-div {
   padding: 15px;
+}
+
+.multicolumn {
+  column-count: 3
+}
+
+.table-wrapper > tbody > tr > td {
+  vertical-align: middle;
 }

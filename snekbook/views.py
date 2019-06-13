@@ -73,13 +73,16 @@ def detail(request, snake_id):
     )
 
 
-def like_snake(request, snake_id, redirect_url):
+### Database API ###
+
+
+def like_snake(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     request.user.snake_set.add(snake)
-    return redirect(f"/{redirect_url}/{snake_id}")
+    return redirect(request.POST["next"])
 
 
-def unlike_snake(request, snake_id, redirect_url):
+def unlike_snake(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     request.user.snake_set.remove(snake)
-    return redirect(redirect_url)
+    return redirect(request.POST["next"])

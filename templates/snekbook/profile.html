@@ -1,27 +1,28 @@
 {% extends 'snekbook/base.html' %}
 {% load static %}
-{% block title%}{{thisuser.username}}{% endblock %}
+{% block title%}{{thisuser.username | lower}}{% endblock %}
 
 {% block content %}
-<h1>{{thisuser.username}}'s Sneks</h1>
-<table class="table center table-dark">
-  <thead>
-    <tr>
-      <th>Species</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
+<table class="table table-borderless table-striped table-wrapper">
   <tbody>
     {% for snake in snakes %}
     <tr>
       <td>
-        <a href="/detail/{{snake.pk}}">{{snake.genus}} {{snake.species}}</a>
-      </td>
-      <td>
-        <form form action="{% url 'unlike' snake.id 'profile' %}" method="post">
-          {% csrf_token %}
-          <input type="submit" value="X" class="btn btn-primary">
-        </form>
+        <div class="row align-items-center">
+          <div class="col-1" style="text-align: center">
+              <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:35px;width:35px;display:inline-block">
+          </div>
+          <div class="col-9">
+              <a href="{% url 'detail' snake.id %}">{{snake.genus}} {{snake.species}} ({{snake.common_name}})</a>
+          </div>
+          <div class="col-2" style="text-align: right">
+            <form action="{% url 'unlike' snake.id %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{% url 'profile' request.user.id %}">
+              <button type="submit" class="btn btn-link"><i class="fa fa-minus-square"></i></button>
+            </form>
+          </div>
+        </div>
       </td>
     </tr>
     {% endfor %}
