@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Count
 from django.contrib.auth import get_user_model
 
-
+from . import utils
 from .models import Snake, Comment
 from .forms import CommentForm
 
@@ -29,16 +29,11 @@ def list(request, cursor):
     num_snakes = Snake.objects.count()
     num_snakes_per_row = 4
     num_results = num_snakes_per_row * 2
-
-    def grouped(l, n):
-        for i in range(0, len(l), n):
-            yield l[i:i+n]
-    
     return render(
         request,
         "snekbook/list.html",
         {
-            "snake_groups": grouped(snakes[cursor : cursor + num_results], 4),
+            "snake_groups": utils.grouped(snakes[cursor : cursor + num_results], 4),
             "cursor_left_enabled": cursor - num_results < 0,
             "cursor_left": cursor - num_results if 0 < cursor - num_results else 0,
             "cursor_right_enabled": True,
@@ -65,7 +60,7 @@ def detail(request, snake_id):
         "snekbook/detail.html",
         {
             "snake": snake,
-            "recommended_snakes": snake.recommended_snakes.all()[:8],
+            "recommended_snake_groups": utils.grouped(snake.recommended_snakes.all()[:8], 3),
             "likes": snake.likers.count(),
             "comments": snake.comments.all(),
             "form": form,

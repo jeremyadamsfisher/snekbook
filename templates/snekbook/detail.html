@@ -3,7 +3,7 @@
 {% block title%}{{snake.common_name | lower}}{% endblock %}
 
 {% block content %}
-<div class="row align-items-center px-lg-5 padder-div">
+<div class="row align-items-center px-lg-5">
   <div class="col-sm-4">
     <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:250px;width:250px;display:inline-block">
   </div>
@@ -28,7 +28,7 @@
       </table>
   </div>
 </div>
-<div class="row px-lg-5 padder-div">
+<div class="row px-lg-5">
   <div class="col-12">
     {% if comments %}
     <table class="table" style="margin-top:30px">
@@ -74,18 +74,22 @@
     </form>
   </div>
 </div>
-<div class="row px-lg-5 padder-div">
-    <div class="col-12">
+<div class="row px-lg-5" style="padding-top: 25px">
+    <div class="container-fluid">
       <div class="card">
           <h6 class="card-header">similar sneks</h6>
-          <div class="card-body multicolumn">
-            <ul class="naked-list">
-                {% for recommended_snake in recommended_snakes %}
+          <div class="card-body row">
+            {% for recommended_snake_group in recommended_snake_groups %}
+            <div class="col-lg-4 naked">
+              <ul>
+              {% for recommended_snake in recommended_snake_group %}
                 <li>
                   <a href="{% url 'detail' recommended_snake.id %}" class="card-text">{{recommended_snake.common_name}}</a>
                 </li>
-                {% endfor %}
-            </ul>
+              {% endfor %}
+              </ul>
+            </div>
+            {% endfor %}
           </div>
         </div>
     </div>
