@@ -43,6 +43,8 @@
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <br>
     {% endif %}
     {% if user.is_authenticated %}
     <form method="post" id="comment_form">
@@ -82,8 +84,8 @@
           <h6 class="card-header">similar sneks</h6>
           <div class="card-body row">
             {% for recommended_snake_group in recommended_snake_groups %}
-            <div class="col-lg-4 naked">
-              <ul>
+            <div class="col-sm-4 naked">
+              <ul class="list-unstyled" align="center">
               {% for recommended_snake in recommended_snake_group %}
                 <li>
                   <a href="{% url 'detail' recommended_snake.id %}" class="card-text">{{recommended_snake.common_name}}</a>
