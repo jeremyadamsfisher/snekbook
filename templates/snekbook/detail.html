@@ -4,23 +4,21 @@
 
 {% block content %}
 <div class="row align-items-center px-lg-5">
-  <div class="col-sm-4">
+  <div class="col-lg-4" style="text-align: center; padding-bottom: 25px">
     <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:250px;width:250px;display:inline-block">
   </div>
-  <div class="col-sm-8">
+  <div class="col-lg-8 table-dark">
     <table class="table table-dark" style="text-align:center">
         <thead>
           <tr>
-            <th>Genus</th>
-            <th>Species</th>
-            <th>Common Name</th>
+            <th>Scientific</th>
+            <th>Common</th>
             <th>🐍</th>
           </tr>
         </thead>
         <tbody>
           <tr valign="middle">
-            <td>{{snake.genus}}</td>
-            <td>{{snake.species}}</td>
+              <td>{{snake.genus}} {{snake.species}}</td>
             <td>{{snake.common_name}}</td>
             <td><span class="badge badge-pill badge-primary">Likes: {{likes}}</span></td>
           </tr>
@@ -55,7 +53,7 @@
           {% if form.comment.errors %}
             <div class="alert alert-warning" role="alert" style="margin-top:10px;margin-bottom:10px;padding-top:25px">
               <div class="row">
-                <div class="col-10">
+                <div class="col-10 naked">
                   {{ form.comment.errors }}
                 </div>
                 <div class="col-2">
@@ -67,12 +65,10 @@
             </div>
           {% endif %}
       </div>
-      <!-- <input type="submit" value="Comment" name="__comment__" class="btn btn-light"> -->
     </form>
     <form action="{% url 'like' snake.id %}" method="post" id="like_form">
       {% csrf_token %}
       <input type="hidden" name="next" value="{% url 'detail' snake.id %}">
-      <!-- <input type="submit" value="Like" name="__like__" class="btn btn-primary"> -->
     </form>
     <a class="btn btn-light" href="javascript:{}" onclick="document.getElementById('comment_form').submit(); return false;">comment</a>
     <a class="btn btn-primary" href="javascript:{}" onclick="document.getElementById('like_form').submit(); return false;">like</a>

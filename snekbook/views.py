@@ -50,7 +50,7 @@ def detail(request, snake_id):
             Comment(
                 snake=snake,
                 author=request.user,
-                text=form.cleaned_data['comment'],
+                text=utils.to_snek(form.cleaned_data['comment'])
             ).save()
     else:
         form = CommentForm()
