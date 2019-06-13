@@ -5,16 +5,14 @@
 {% block content %}
 
 {% for snake_group in snake_groups %}
-<div class="row" style="margin: 25px">
+<div class="card-deck">
   {% for snake in snake_group %}
-  <div class="col-sm-3">
-    <div class="card">
-      <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text">
-          <a href="{% url 'detail' snake.id %}" class="text-muted">{{snake.common_name}}</a>
-        </p>
-      </div>
+  <div class="card" style="margin: 25px;">
+    <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top">
+    <div class="card-body">
+      <p class="card-text">
+        <a href="{% url 'detail' snake.id %}" class="text-muted">{{snake.common_name}}</a>
+      </p>
     </div>
   </div>
   {% endfor %}
