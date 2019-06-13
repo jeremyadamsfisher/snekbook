@@ -45,7 +45,7 @@
     </table>
     {% endif %}
     {% if user.is_authenticated %}
-    <form method="post">
+    <form method="post" id="comment_form">
       {% csrf_token %}
       {{ form.non_field_errors }}
       <div class="form-group fieldWrapper">
@@ -65,13 +65,15 @@
             </div>
           {% endif %}
       </div>
-      <input type="submit" value="Comment" name="__comment__" class="btn btn-light">
+      <!-- <input type="submit" value="Comment" name="__comment__" class="btn btn-light"> -->
     </form>
-    <form action="{% url 'like' snake.id %}" method="post">
+    <form action="{% url 'like' snake.id %}" method="post" id="like_form">
       {% csrf_token %}
       <input type="hidden" name="next" value="{% url 'detail' snake.id %}">
-      <input type="submit" value="Like" name="__like__" class="btn btn-primary">
+      <!-- <input type="submit" value="Like" name="__like__" class="btn btn-primary"> -->
     </form>
+    <a class="btn btn-light" href="javascript:{}" onclick="document.getElementById('comment_form').submit(); return false;">comment</a>
+    <a class="btn btn-primary" href="javascript:{}" onclick="document.getElementById('like_form').submit(); return false;">like</a>
   </div>
 </div>
 <div class="row px-lg-5" style="padding-top: 25px">

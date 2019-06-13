@@ -45,14 +45,13 @@ def list(request, cursor):
 def detail(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     if request.method == "POST":
-        if '__comment__' in request.POST:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                Comment(
-                    snake=snake,
-                    author=request.user,
-                    text=form.cleaned_data['comment'],
-                ).save()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            Comment(
+                snake=snake,
+                author=request.user,
+                text=form.cleaned_data['comment'],
+            ).save()
     else:
         form = CommentForm()
     return render(
