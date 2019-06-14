@@ -4,11 +4,10 @@
 
 {% block content %}
 
-{% for snake_group in snake_groups %}
-<div class="card-deck">
-  {% for snake in snake_group %}
-  <div class="card" style="margin: 25px;">
-    <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top">
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  {% for snake in snakes %}
+  <div class="card" style="margin: 5px;">
+    <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top" width="40px" hieght="40px">
     <div class="card-body">
       <p class="card-text">
         <a href="{% url 'detail' snake.id %}" class="text-muted">{{snake.common_name}}</a>
@@ -17,8 +16,7 @@
   </div>
   {% endfor %}
 </div>
-{% endfor %}
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation example" style="margin-top: 15px">
   <ul class="pagination justify-content-center">
     <li class="page-item {% if cursor_left_enabled %} disabled{% endif %}">
       <a class="page-link" href="{% url 'list' cursor_left %}">Previous</a>

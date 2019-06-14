@@ -27,13 +27,12 @@ def profile(request, user_id):
 def list(request, cursor):
     snakes = Snake.objects.all()
     num_snakes = Snake.objects.count()
-    num_snakes_per_row = 4
-    num_results = num_snakes_per_row * 2
+    num_results = 12
     return render(
         request,
         "snekbook/list.html",
         {
-            "snake_groups": utils.grouped(snakes[cursor : cursor + num_results], 4),
+            "snakes": snakes[cursor : cursor + num_results],
             "cursor_left_enabled": cursor - num_results < 0,
             "cursor_left": cursor - num_results if 0 < cursor - num_results else 0,
             "cursor_right_enabled": True,
@@ -45,13 +44,16 @@ def list(request, cursor):
 def detail(request, snake_id):
     snake = get_object_or_404(Snake, pk=snake_id)
     if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
+        form_post = CommentForm(request.POST)
+        if form_post.is_valid():
             Comment(
                 snake=snake,
                 author=request.user,
-                text=utils.to_snek(form.cleaned_data['comment'])
+                text=utils.to_snek(form_post.cleaned_data['comment'])
             ).save()
+            form = CommentForm()
+        else:
+            form = form_post()
     else:
         form = CommentForm()
     return render(
