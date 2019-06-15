@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Count
 from django.contrib.auth import get_user_model
 
-from . import utils
+from .utils import translation
 from .models import Snake, Comment
 from .forms import CommentForm
 
@@ -49,11 +49,11 @@ def detail(request, snake_id):
             Comment(
                 snake=snake,
                 author=request.user,
-                text=utils.to_snek(form_post.cleaned_data['comment'])
+                text=translation.to_snek(form_post.cleaned_data['comment'])
             ).save()
             form = CommentForm()
         else:
-            form = form_post()
+            form = form_post
     else:
         form = CommentForm()
     return render(
