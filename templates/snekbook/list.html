@@ -6,14 +6,16 @@
 <div class="container container-body">
   <div style="display: flex; flex-wrap: wrap; justify-content: center;">
     {% for snake in snakes %}
-    <div class="card" style="margin: 5px;">
-      <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top" width="40px" hieght="40px">
-      <div class="card-body">
-        <p class="card-text">
-          <a href="{% url 'detail' snake.id %}" class="text-muted">{{snake.common_name}}</a>
-        </p>
+    <a href="{% url 'detail' snake.id %}">
+      <div class="card" style="margin: 5px;">
+        <img src="https://apprecs.org/ios/images/app-icons/256/ea/356781290.jpg" class="card-img-top" width="40px" hieght="40px">
+        <div class="card-body">
+          <p class="card-text">
+            <span class="text-muted">{{snake.common_name}}</span>
+          </p>
+        </div>
       </div>
-    </div>
+    </a>
     {% endfor %}
   </div>
   <nav aria-label="Page navigation example" style="margin-top: 15px">
