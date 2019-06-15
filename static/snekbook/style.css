@@ -53,3 +53,9 @@
   text-align: center;
   margin: 5px;
 }
+
+/* profile view */
+
+#profile-table > tbody > tr > td {
+  vertical-align: middle;
+}
