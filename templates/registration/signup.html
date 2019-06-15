@@ -1,0 +1,14 @@
+{% extends 'snekbook/base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="login-form">
+  <form method="post" class="form-group">
+    <h2>Sign up</h2>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+  </form>
+</div>
+{% endblock %}
