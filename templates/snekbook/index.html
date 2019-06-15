@@ -3,8 +3,8 @@
 {% block title%}home{% endblock %}
 {% block content%}
 <div class="container container-body">
-  <div class="row justify-content-md-center">
-    <div class="col-lg-8 col-sm-12">
+  <div class="row mt-5">
+    <div class="col-lg-8 col-sm-12 mx-auto">
       <div class="jumbotron">
         {% if user.is_authenticated %}
         <h1>Welcome, {{user.username}}</h1>
