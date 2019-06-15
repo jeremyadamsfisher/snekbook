@@ -3,29 +3,31 @@
 {% block title%}{{thisuser.username | lower}}{% endblock %}
 
 {% block content %}
-<table class="table table-borderless table-striped table-wrapper">
-  <tbody>
-    {% for snake in snakes %}
-    <tr>
-      <td>
-        <div class="row align-items-center">
-          <div class="col-1" style="text-align: center">
-              <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:35px;width:35px;display:inline-block">
+<div class="container container-body">
+  <table class="table table-borderless table-striped table-wrapper">
+    <tbody>
+      {% for snake in snakes %}
+      <tr>
+        <td>
+          <div class="row align-items-center">
+            <div class="col-1" style="text-align: center">
+                <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="" style="height:35px;width:35px;display:inline-block">
+            </div>
+            <div class="col-9">
+                <a href="{% url 'detail' snake.id %}">{{snake.genus}} {{snake.species}} ({{snake.common_name}})</a>
+            </div>
+            <div class="col-2" style="text-align: right">
+              <form action="{% url 'unlike' snake.id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{% url 'profile' request.user.id %}">
+                <button type="submit" class="btn btn-link"><i class="fa fa-minus-square"></i></button>
+              </form>
+            </div>
           </div>
-          <div class="col-9">
-              <a href="{% url 'detail' snake.id %}">{{snake.genus}} {{snake.species}} ({{snake.common_name}})</a>
-          </div>
-          <div class="col-2" style="text-align: right">
-            <form action="{% url 'unlike' snake.id %}" method="POST">
-              {% csrf_token %}
-              <input type="hidden" name="next" value="{% url 'profile' request.user.id %}">
-              <button type="submit" class="btn btn-link"><i class="fa fa-minus-square"></i></button>
-            </form>
-          </div>
-        </div>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
