@@ -13,6 +13,7 @@ pylint = "*"
 
 [packages]
 django = "==2.1.1"
+django-widget-tweaks = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,9 +1,11 @@
+/* common */
+
 .profile {
   border-radius: 50%;
 }
-.container { 
-  position: relative;
-}
+
+/* login/signup view */
+
 .login-form {
   width: 380px;
   margin: 50px auto;
@@ -25,15 +27,17 @@
   min-height: 38px;
   border-radius: 2px;
 }
+.error-box {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* detail view */
+
 .naked ul {
   list-style: none;
   margin-bottom: 0px;
   text-align: center;
   padding-left: 0px;
 }
-.pad {
-  padding: 15px;
-}
-.table-wrapper > tbody > tr > td {
-  vertical-align: middle;
-}
+
