@@ -16,7 +16,7 @@
           {% if user.is_authenticated %}
           <a class="btn btn-primary" href="{% url 'list' 0 %}">Go like some sneken</a>
           {% else %}
-          <a class="btn btn-primary" href="{% url 'login' %}">log in</a><a class="btn btn-link" href="#">register</a>
+          <a class="btn btn-primary" href="{% url 'login' %}">log in</a><a class="btn btn-link" href="{% url 'signup' %}">register</a>
           {% endif %}
         </div>
       </div>
