@@ -1,4 +1,5 @@
 import os
+import django_heroku
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "1s*hswqz(91_q5g6ci!c&33&5xr$ua2_!8(q3c#%a=8h_eo$xq"
@@ -63,3 +64,5 @@ LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "snekbook.User"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+django_heroku.settings(locals())
