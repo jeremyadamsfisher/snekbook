@@ -1,4 +1,5 @@
 import os
+from os import path
 import django_heroku
 import dj_database_url
 
@@ -45,14 +46,13 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {}
-if bool(int(os.environ.get("SNEKBOOK_LOCAL_RUNTIME", "0"))):
+if path.exists("./db.sqlite3"):
     DATABASES["default"] = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 else:
     DATABASES["default"] = dj_database_url.config(conn_max_age=600)
-
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
