@@ -2,23 +2,21 @@
 {% load static %}
 {% block title%}home{% endblock %}
 {% block content%}
-<div class="container" style="margin-top:150px;">
-  <div class="row">
-    <div class="col-4">
-      <img class="profile" src="{% static 'snekbook/snek_friend.jpg' %}" alt="">
-    </div>
-    <div class="col-8">
+<div class="container container-body">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-8 col-sm-12">
       <div class="jumbotron">
+        {% if user.is_authenticated %}
+        <h1>Welcome, {{user.username}}</h1>
+        <hr><br>
+        <a class="btn btn-primary" href="{% url 'list' 0 %}">Go like some sneken</a>
+        {% else %}
         <h1>What are you waiting for?</h1>
         <hr>
         <h4>get you a good snake!</h4>
-        <div style="margin-top:50px">
-          {% if user.is_authenticated %}
-          <a class="btn btn-primary" href="{% url 'list' 0 %}">Go like some sneken</a>
-          {% else %}
-          <a class="btn btn-primary" href="{% url 'login' %}">log in</a><a class="btn btn-link" href="{% url 'signup' %}">register</a>
-          {% endif %}
-        </div>
+        <br>
+        <a class="btn btn-primary" href="{% url 'login' %}">log in</a><a class="btn btn-link" href="{% url 'signup' %}">register</a>
+        {% endif %}
       </div>
     </div>
   </div>
