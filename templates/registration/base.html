@@ -1,7 +1,6 @@
 {% extends 'snekbook/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-{% block title %}account{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -27,7 +26,7 @@
                 </div>
                 {% endif %}
                 {% endfor %}
-                <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+                <button type="submit" class="btn btn-primary btn-block">{% block button_text %}{% endblock %}</button>
             </form>
         </div>
     </div>
