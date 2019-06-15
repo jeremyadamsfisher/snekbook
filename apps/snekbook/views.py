@@ -61,7 +61,7 @@ def detail(request, snake_id):
         "snekbook/detail.html",
         {
             "snake": snake,
-            "recommended_snake_groups": utils.grouped(snake.recommended_snakes.all()[:8], 3),
+            "recommended_snakes": snake.recommended_snakes.all()[:8],
             "likes": snake.likers.count(),
             "comments": snake.comments.all(),
             "form": form,

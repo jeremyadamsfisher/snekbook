@@ -44,10 +44,12 @@
 
 /* detail view */
 
-.naked ul {
-  list-style: none;
-  margin-bottom: 0px;
-  text-align: center;
-  padding-left: 0px;
+.sneklist {
+  display: flex;
+  flex-wrap: wrap;
 }
 
+.sneklist a {
+  text-align: center;
+  margin: 5px;
+}

@@ -26,7 +26,7 @@
             </tbody>
           </table>
       </div>
-    </div>
+  </div>
     <div class="row px-lg-5">
       <div class="col-12">
         {% if comments %}
@@ -79,18 +79,12 @@
         <div class="container-fluid">
           <div class="card">
               <h6 class="card-header">similar sneks</h6>
-              <div class="card-body row">
-                {% for recommended_snake_group in recommended_snake_groups %}
-                <div class="col-sm-4 naked">
-                  <ul>
-                  {% for recommended_snake in recommended_snake_group %}
-                    <li>
-                      <a href="{% url 'detail' recommended_snake.id %}" class="card-text">{{recommended_snake.common_name}}</a>
-                    </li>
+              <div class="card-body sneklist">
+                <div class="text-center">
+                  {% for recommended_snake in recommended_snakes %}
+                  <a class="badge badge-pill badge-primary" href="{% url 'detail' recommended_snake.id %}" class="card-text">{{recommended_snake.common_name}}</a>
                   {% endfor %}
-                  </ul>
                 </div>
-                {% endfor %}
               </div>
             </div>
         </div>
