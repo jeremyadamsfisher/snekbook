@@ -3,7 +3,7 @@ ENV=pipenv run
 MANAGE=pipenv run python manage.py
 test:
 	$(ENV) pytest --driver Chrome
-run:
+run: secrets
 	$(MANAGE) runserver
 update_deps:
 	pipenv lock --pre --dev \
@@ -17,3 +17,5 @@ makemigrations:
 makeandmigrate: makemigrations migrate
 black:
 	$(PY) black .
+secrets:
+	$(MAKE) -f secrets

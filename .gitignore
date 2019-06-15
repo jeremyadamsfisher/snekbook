@@ -160,5 +160,5 @@ Temporary Items
 
 
 .snakemake/
-
 .vscode/
+secrets

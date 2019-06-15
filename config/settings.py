@@ -1,5 +1,6 @@
 import os
 import django_heroku
+import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "1s*hswqz(91_q5g6ci!c&33&5xr$ua2_!8(q3c#%a=8h_eo$xq"
@@ -18,6 +19,7 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -42,12 +44,15 @@ TEMPLATES = [
     }
 ]
 WSGI_APPLICATION = "config.wsgi.application"
-DATABASES = {
-    "default": {
+DATABASES = {}
+if bool(int(os.environ.get("SNEKBOOK_LOCAL_RUNTIME", "0"))):
+    DATABASES["default"] = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
-}
+else:
+    DATABASES["default"] = dj_database_url.config(conn_max_age=600)
+
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
