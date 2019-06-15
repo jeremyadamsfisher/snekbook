@@ -4,6 +4,9 @@
 
 {% block content %}
 <div class="container container-body">
+  <h3>my sneks</h3>
+  <hr>
+  {% if snakes %}
   <table id="profile-table" class="table table-borderless table-striped table-wrapper">
     <tbody>
       {% for snake in snakes %}
@@ -25,5 +28,11 @@
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+  <div class="alert alert-info">
+      <span>you havent liked any sneks yet.</span>
+      <a href="{% url 'list' 0 %}">lets fix that!</a>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
