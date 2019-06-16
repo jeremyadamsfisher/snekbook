@@ -1,28 +1,56 @@
 rule recommender_system:
-    input: "snake_db.csv"
+    input: "snake_db_with_images.csv"
     output: "snake_db_enriched.csv"
     run:
         import pandas as pd
         from sklearn.feature_extraction.text import CountVectorizer
         from sklearn.metrics.pairwise import cosine_similarity
 
-        df = pd.read_csv(input[0])
-        soup = df.apply((lambda row: " ".join(str(elem) for elem in row if elem)), axis=1)
+        df = pd.read_csv(input[0]).rename(columns={"index": "snake_id"})
+        snake_id_to_ordering = dict(zip(df["snake_id"], df.index))
+
+        soup = df[["genus", "species", "toxicity", "rating", "common name"]].apply(
+            (lambda row: " ".join(str(elem) for elem in row if elem)
+        ), axis=1)
         count = CountVectorizer(stop_words='english')
         count_matrix = count.fit_transform(soup)
         pairwise_cosine_simularity = cosine_similarity(count_matrix, count_matrix)
-
-        def get_snake_recommendations(snake_id, n=10):
+        
+        def get_snake_recommendations(snake_id, n=4):
             best_snake_ids, _ = zip(*sorted(
-                enumerate(pairwise_cosine_simularity[snake_id]),
+                enumerate(pairwise_cosine_simularity[snake_id_to_ordering[snake_id]]),
                 key=(lambda id_cos_val: id_cos_val[1]),
                 reverse=True
             ))
             return best_snake_ids[1:n+1]
 
-        df["recommended_snakes"] = df.reset_index()["index"].apply(get_snake_recommendations)
+        df["recommended_snakes"] = df["snake_id"].apply(get_snake_recommendations)
         df.columns = [col.replace(" ", "_").lower() for col in df.columns]
         df.reset_index().to_csv(output[0], index=False)
+
+rule truncate_for_recommender_system:
+    input: "snake_db_shuffled.csv"
+    output: "snake_db_with_images.csv"
+    run:
+        import csv
+        from pathlib import Path
+
+        idx_to_img = {
+            path.stem: path.name
+            for path in Path("curated_downloads").glob("*.*")
+        }
+
+        with open(input[0], "rt") as f, open(output[0], "wt") as fout:
+            reader = csv.DictReader(f)
+            writer = csv.DictWriter(fout, reader.fieldnames + ["image"])
+            writer.writeheader()
+            for row in reader:
+                snake_idx = row["index"]
+                if snake_idx in idx_to_img:
+                    writer.writerow({
+                        "image": idx_to_img[snake_idx],
+                        **row
+                    })
 
 rule download_snake_html:
     output: temporary("snake_db.html")
@@ -105,3 +133,10 @@ rule clean_snake_csv:
                     })
                 except ValueError:
                     raise ValueError("Corrupted row: {}".format(row["scientific_name"].replace("\xa0", " ").split(" ")))
+
+rule subsample:
+    input: "snake_db.csv"
+    output: "snake_db_shuffled.csv"
+    run:
+        import pandas as pd
+        pd.read_csv(input[0]).reset_index().sample(frac=1).to_csv(output[0], index=False)
