@@ -15,6 +15,8 @@ class Snake(models.Model):
     toxicity = models.CharField(max_length=200)
     rating = models.CharField(max_length=200)
     common_name = models.CharField(max_length=200)
+    img_thumb = models.CharField(max_length=20)
+    img_norm = models.CharField(max_length=20)
     recommended_snakes = models.ManyToManyField("self")
     likers = models.ManyToManyField(get_user_model())
 

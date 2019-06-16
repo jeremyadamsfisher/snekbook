@@ -6,7 +6,7 @@ def main():
     images_new_dir = Path("thumbs")
     images_new_dir.mkdir(exist_ok=True)
     for img_fp in images_orig:
-        for im_type, size in [("norm", (300, 300)), ("thumb", (50, 50))]:
+        for im_type, size in [("norm", (250, 250)), ("thumb", (50, 50))]:
             with Image.open(img_fp) as im:
                 main_dim = min(im.size)
                 im.convert('RGB')

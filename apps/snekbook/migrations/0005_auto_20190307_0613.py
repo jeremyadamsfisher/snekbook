@@ -16,4 +16,16 @@ class Migration(migrations.Migration):
                 related_name="_snake_recommended_snakes_+", to="snekbook.Snake"
             ),
         ),
+        migrations.AddField(
+            model_name='snake',
+            name='img_norm',
+            field=models.CharField(default='', max_length=20),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='snake',
+            name='img_thumb',
+            field=models.CharField(default='', max_length=20),
+            preserve_default=False,
+        ),
     ]

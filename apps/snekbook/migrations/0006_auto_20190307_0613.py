@@ -15,6 +15,7 @@ def populate_snakes(apps, schema_editor):
         django_id_to_recommended_snake_idx = {}
         # initial pass; create all our snakes
         for snake in snake_db_reader:
+            img_prefix = snake["image"]
             s = Snake(
                 genus=snake["genus"],
                 species=snake["species"],
@@ -22,6 +23,8 @@ def populate_snakes(apps, schema_editor):
                 toxicity=snake["toxicity"],
                 rating=snake["rating"],
                 common_name=snake["common_name"],
+                img_thumb=f"thumb_{img_prefix}",
+                img_norm=f"norm_{img_prefix}",
             )
             s.save()
             django_id_to_recommended_snake_idx[s.id] = literal_eval(
