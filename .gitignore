@@ -162,3 +162,6 @@ Temporary Items
 .snakemake/
 .vscode/
 secrets
+data_scrubber/curated_downloads
+data_scrubber/downloads
+data_scrubber/snake_db_*.csv
