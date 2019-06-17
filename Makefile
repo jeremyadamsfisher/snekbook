@@ -4,7 +4,7 @@ MANAGE=pipenv run python manage.py
 test: collectstatic
 	$(MANAGE) test -v 1
 collectstatic:
-	rm -r ./staticfiles
+	rm -r ./staticfiles |:
 	$(MANAGE) collectstatic
 run:
 	$(MANAGE) runserver
