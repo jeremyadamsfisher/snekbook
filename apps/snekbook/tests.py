@@ -1,5 +1,8 @@
 import unittest as ut
 import django.test as dj
+from django.test.utils import setup_test_environment
+from django.test import Client
+from django.urls import reverse
 
 from .utils import translation
 
@@ -25,3 +28,10 @@ Sss, ss s ssssss sssss, ss sss sss ssssssss -- ss sss sss ssssssssss -- ss sss s
             with self.subTest():
                 self.assertEqual(translation.to_snek(eng), snek)
 
+
+class Index(dj.TestCase):
+
+    def test_logged_in_view_shows_users_name(self):
+        client = Client()
+        response = client.get(reverse("home"))
+        self.assertIs(response.status_code, 200)

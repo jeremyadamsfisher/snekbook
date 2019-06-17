@@ -1,8 +1,11 @@
 PY=pipenv run python
 ENV=pipenv run
 MANAGE=pipenv run python manage.py
-test:
+test: collectstatic
 	$(MANAGE) test -v 1
+collectstatic:
+	rm -r ./staticfiles
+	$(MANAGE) collectstatic
 run:
 	$(MANAGE) runserver
 migrate:
