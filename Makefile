@@ -2,7 +2,7 @@ PY=pipenv run python
 ENV=pipenv run
 MANAGE=pipenv run python manage.py
 test:
-	$(ENV) pytest --driver Chrome
+	$(MANAGE) test 
 run:
 	$(MANAGE) runserver
 update_deps:
