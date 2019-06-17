@@ -6,10 +6,8 @@ test:
 run:
 	$(MANAGE) runserver
 migrate:
-	$(MANAGE) migrate snekbook
-	$(MANAGE) migrate
-makemigrations:
-	$(MANAGE) makemigrations
-makeandmigrate: makemigrations migrate
+	for app in snekbook accounts; \
+		do $(MANAGE) migrate snekbook ; \
+	done ; $(MANAGE) migrate
 black:
 	$(PY) black .
