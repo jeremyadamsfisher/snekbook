@@ -10,4 +10,4 @@ migrate:
 		do $(MANAGE) migrate snekbook ; \
 	done ; $(MANAGE) migrate
 black:
-	$(PY) black .
+	$(ENV) black .

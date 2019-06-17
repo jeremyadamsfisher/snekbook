@@ -71,7 +71,7 @@ LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "snekbook.User"
 
 STATIC_URL = "/static/"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = (
     path.join(BASE_DIR, "static"),
     path.join(BASE_DIR, "data_scrubber", "thumbs"),
@@ -79,4 +79,4 @@ STATICFILES_DIRS = (
 
 django_heroku.settings(locals())
 # hacky workaround to get dj_database_url to forget about SSL at the last second
-del DATABASES['default']['OPTIONS']['sslmode']
+del DATABASES["default"]["OPTIONS"]["sslmode"]
