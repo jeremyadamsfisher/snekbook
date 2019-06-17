@@ -22,11 +22,11 @@ jobs:
       #     background: true
       - run:
           name: Run tests
-          command: make test
-      # - store_test_results:
-      #     path: test-reports
-      # - store_artifacts:
-      #     path: test-reports
+          command: |
+            mkdir -p ./testreports/
+            make test PYTEST_ARGS="--junitxml='./testreports/results.xml'"
+      - store_test_results:
+          path: testreports
   # deploy:
   #     docker:
   #       - image: buildpack-deps:trusty

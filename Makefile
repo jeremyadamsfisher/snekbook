@@ -2,7 +2,7 @@ PY=pipenv run python
 ENV=pipenv run
 MANAGE=pipenv run python manage.py
 test: collectstatic
-	$(MANAGE) test -v 1
+	$(ENV) pytest -vv $(PYTEST_ARGS)
 collectstatic:
 	rm -r ./staticfiles |:
 	$(MANAGE) collectstatic
