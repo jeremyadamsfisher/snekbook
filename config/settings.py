@@ -93,4 +93,5 @@ FIXTURE_DIRS = path.join(BASE_DIR, "tests", "fixtures")
 
 django_heroku.settings(locals())
 # hacky workaround to get dj_database_url to forget about SSL at the last second
-del DATABASES["default"]["OPTIONS"]["sslmode"]
+if "OPTIONS" in DATABASES["default"]:
+    DATABASES["default"]["OPTIONS"].pop("sslmode")
