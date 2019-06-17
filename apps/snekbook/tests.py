@@ -1,6 +1,7 @@
-import time
+from django.test import TestCase
+from django.contrib.auth import get_user_model
 
 
-def test_functional(selenium, live_server):
-    selenium.get(live_server.url)
-    assert "Snekbook" in selenium.title
+class SnekbookTests(TestCase):
+    def test_test(self):
+        self.assertEqual(1, 1)
