@@ -27,6 +27,12 @@ jobs:
             make test PYTEST_ARGS="--junitxml='./testreports/results.xml'"
       - store_test_results:
           path: testreports
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.6/site-packages"
   # deploy:
   #     docker:
   #       - image: buildpack-deps:trusty
