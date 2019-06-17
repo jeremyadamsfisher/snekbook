@@ -2,7 +2,7 @@ PY=pipenv run python
 ENV=pipenv run
 MANAGE=pipenv run python manage.py
 test:
-	$(MANAGE) test 
+	$(MANAGE) test -v 1
 run:
 	$(MANAGE) runserver
 migrate:

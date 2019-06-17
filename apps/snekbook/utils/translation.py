@@ -8,7 +8,7 @@ class SnekTranslationImpossible(Exception):
 
 lower = "abcdefghijklmnopqrstuvwxyz"
 upper = lower.upper()
-same = """,.!'";!-() —"""
+same = """,.!'";!-() —\n"""
 eng_to_snek_translation = dict(zip(same, same))
 for alphabet, m in [(lower, "s"), (upper, "S")]:
     for c in alphabet:
