@@ -2,11 +2,16 @@ import os
 from os import path
 import django_heroku
 import dj_database_url
+import dotenv
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRET_KEY = "1s*hswqz(91_q5g6ci!c&33&5xr$ua2_!8(q3c#%a=8h_eo$xq"
-DEBUG = True
-ALLOWED_HOSTS = ["*"]
+BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
+dotenv_file = path.join(BASE_DIR, ".env")
+if path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
+SECRET_KEY = os.environ["SECRET_KEY"]
+DEBUG = os.environ["DEBUG"]
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"]
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -15,6 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "widget_tweaks",
+    # custom apps
     "apps.snekbook",
     "apps.accounts",
 ]
@@ -32,7 +38,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -45,14 +51,7 @@ TEMPLATES = [
     }
 ]
 WSGI_APPLICATION = "config.wsgi.application"
-DATABASES = {}
-if True or path.exists("./db.sqlite3"):
-    DATABASES["default"] = {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-else:
-    DATABASES["default"] = dj_database_url.config(conn_max_age=600)
+DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -66,13 +65,18 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-STATIC_URL = "/static/"
+
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "snekbook.User"
+
+STATIC_URL = "/static/"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "data_scrubber", "thumbs"),
+    path.join(BASE_DIR, "static"),
+    path.join(BASE_DIR, "data_scrubber", "thumbs"),
 )
 
 django_heroku.settings(locals())
+# hacky workaround to get dj_database_url to forget about SSL at the last second
+del DATABASES['default']['OPTIONS']['sslmode']
