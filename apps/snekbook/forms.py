@@ -3,6 +3,7 @@ from django.forms import ValidationError
 
 from .utils import translation
 
+
 def validate_snek_speak(comment_text):
     try:
         snek_translation = translation.to_snek(comment_text)
@@ -12,8 +13,6 @@ def validate_snek_speak(comment_text):
             params={"chars": e.disallowed_characters},
         )
 
+
 class CommentForm(forms.Form):
-    comment = forms.CharField(
-        max_length=100,
-        validators=[validate_snek_speak]
-    )
+    comment = forms.CharField(max_length=100, validators=[validate_snek_speak])

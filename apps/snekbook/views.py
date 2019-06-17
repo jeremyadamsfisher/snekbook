@@ -49,7 +49,7 @@ def detail(request, snake_id):
             Comment(
                 snake=snake,
                 author=request.user,
-                text=translation.to_snek(form_post.cleaned_data['comment'])
+                text=translation.to_snek(form_post.cleaned_data["comment"]),
             ).save()
             form = CommentForm()
         else:
