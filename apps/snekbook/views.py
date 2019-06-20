@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.db.models import Count
 from django.contrib.auth import get_user_model
 
 from .utils import translation
@@ -24,7 +23,7 @@ def profile(request, user_id):
     )
 
 
-def list(request, cursor):
+def list_sneks(request, cursor):
     snakes = Snake.objects.all()
     num_snakes = Snake.objects.count()
     num_results = 12
@@ -34,8 +33,8 @@ def list(request, cursor):
         {
             "snakes": snakes[cursor : cursor + num_results],
             "cursor_left_enabled": cursor - num_results < 0,
-            "cursor_left": cursor - num_results if 0 < cursor - num_results else 0,
-            "cursor_right_enabled": True,
+            "cursor_left": cursor - num_results if cursor - num_results > 0 else 0,
+            "cursor_right_enabled": num_snakes <= cursor + num_results,
             "cursor_right": cursor + num_results,
         },
     )

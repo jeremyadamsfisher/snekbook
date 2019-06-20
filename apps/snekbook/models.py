@@ -1,5 +1,5 @@
-from django.contrib.auth import get_user_model
-from django.db import models
+import django.contrib.auth as dj_auth
+import django.db.models as models
 
 
 class Snake(models.Model):
@@ -13,7 +13,7 @@ class Snake(models.Model):
     img_thumb = models.CharField(max_length=20)
     img_norm = models.CharField(max_length=20)
     recommended_snakes = models.ManyToManyField("self")
-    likers = models.ManyToManyField(get_user_model())
+    likers = models.ManyToManyField(dj_auth.get_user_model())
 
     def __str__(self):
         return " ".join((self.genus, self.species))
@@ -21,10 +21,8 @@ class Snake(models.Model):
 
 class Comment(models.Model):
     list_display = ("text",)
-    snake = models.ForeignKey(
-        "snekbook.Snake", on_delete=models.CASCADE, related_name="comments"
-    )
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    snake = models.ForeignKey(Snake, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(dj_auth.get_user_model(), on_delete=models.CASCADE)
     text = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True, blank=True)
 

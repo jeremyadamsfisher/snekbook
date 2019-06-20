@@ -12,5 +12,14 @@ migrate:
 	for app in snekbook accounts; \
 		do $(MANAGE) migrate snekbook ; \
 	done ; $(MANAGE) migrate
+makemigrations:
+	$(MANAGE) makemigrations
 black:
 	$(ENV) black .
+lint:
+	$(ENV) pylint \
+			--load-plugins pylint_django \
+			--load-plugins pylint_django.checkers.db_performance \
+			--disable=line-too-long \
+			--disable=missing-docstring \
+			apps/*/*.py
