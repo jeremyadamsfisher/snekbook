@@ -10,11 +10,7 @@ if path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
 SECRET_KEY = os.environ["SECRET_KEY"]
-<<<<<<< HEAD
 DEBUG = bool(os.environ.get("DEBUG", False))
-=======
-DEBUG = os.environ.get("DEBUG", False)
->>>>>>> a1a171b23d75b015c92310c839ef2e9354d4046d
 ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"]
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,7 +51,6 @@ TEMPLATES = [
     }
 ]
 WSGI_APPLICATION = "config.wsgi.application"
-<<<<<<< HEAD
 
 DATABASES = None
 if DEBUG:
@@ -70,9 +65,6 @@ if DEBUG:
 else:
     DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
-=======
-DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
->>>>>>> a1a171b23d75b015c92310c839ef2e9354d4046d
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -89,16 +81,9 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
-<<<<<<< HEAD
 
 STATIC_URL = "/static/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-=======
-AUTH_USER_MODEL = "snekbook.User"
-
-STATIC_URL = "/static/"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
->>>>>>> a1a171b23d75b015c92310c839ef2e9354d4046d
 STATICFILES_DIRS = (
     path.join(BASE_DIR, "static"),
     path.join(BASE_DIR, "data_scrubber", "thumbs"),
@@ -108,9 +93,5 @@ FIXTURE_DIRS = path.join(BASE_DIR, "tests", "fixtures")
 
 django_heroku.settings(locals())
 # hacky workaround to get dj_database_url to forget about SSL at the last second
-<<<<<<< HEAD
 if "OPTIONS" in DATABASES["default"]:
     DATABASES["default"]["OPTIONS"].pop("sslmode")
-=======
-del DATABASES['default']['OPTIONS']['sslmode']
->>>>>>> a1a171b23d75b015c92310c839ef2e9354d4046d
