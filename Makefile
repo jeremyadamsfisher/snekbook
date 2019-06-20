@@ -23,3 +23,6 @@ lint:
 			--disable=line-too-long \
 			--disable=missing-docstring \
 			apps/*/*.py
+deploy: test
+	git push origin master \
+	&& git push heroku master
