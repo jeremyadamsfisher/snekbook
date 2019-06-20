@@ -1,10 +1,16 @@
+<<<<<<< HEAD
 import unittest as ut
 import django.test as dj
 from django.test import Client
 from django.urls import reverse
+=======
+from django.test import TestCase
+from django.contrib.auth import get_user_model
+>>>>>>> a1a171b23d75b015c92310c839ef2e9354d4046d
 
 from .utils import translation
 
+<<<<<<< HEAD
 
 class Translation(ut.TestCase):
     def test_translate(self):
@@ -36,3 +42,8 @@ class Index(dj.TestCase):
         client = Client()
         response = client.get(reverse("home"))
         self.assertIs(response.status_code, 200)
+=======
+class SnekbookTests(TestCase):
+    def test_test(self):
+        self.assertEqual(1, 1)
+>>>>>>> a1a171b23d75b015c92310c839ef2e9354d4046d

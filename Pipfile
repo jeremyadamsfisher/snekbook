@@ -8,6 +8,7 @@ black = "*"
 awsebcli = "*"
 pylint = "*"
 pylint-django = "*"
+pytest-django = "*"
 
 [packages]
 django = "==2.1.1"
@@ -16,7 +17,6 @@ django-heroku = "*"
 psycopg2 = ">=2.7"
 gunicorn = "*"
 python-dotenv = "*"
-pytest-django = "*"
 
 [requires]
 python_version = "3.6"
