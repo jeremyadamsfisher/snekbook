@@ -2,6 +2,7 @@ import unittest as ut
 import django.test as dj
 from django.test import Client
 from django.urls import reverse
+import django.contrib.auth as dj_auth
 
 from .utils import translation
 
@@ -32,7 +33,21 @@ class Translation(ut.TestCase):
 
 
 class Index(dj.TestCase):
+    def setUp(self):
+        self.username = "admin"
+        self.password = "123"
+        dj_auth.get_user_model().objects.create_user(
+            username=self.username,
+            password=self.password,
+        )
+
     def test_logged_in_view_shows_users_name(self):
         client = Client()
         response = client.get(reverse("home"))
-        self.assertIs(response.status_code, 200)
+        self.assertNotIn(self.username, response.content.decode("utf-8"))
+        client.login(
+            username=self.username,
+            password=self.password,
+        )
+        response = client.get(reverse("home"))
+        self.assertIn(self.username, response.content.decode("utf-8"))
