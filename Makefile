@@ -2,7 +2,7 @@ PY=pipenv run python
 ENV=pipenv run
 MANAGE=pipenv run python manage.py
 test: collectstatic
-	$(ENV) pytest -v $(PYTEST_ARGS)
+	$(ENV) pytest --driver Safari -v $(PYTEST_ARGS)
 collectstatic:
 	rm -r ./staticfiles |:
 	$(MANAGE) collectstatic
@@ -22,7 +22,9 @@ lint:
 			--load-plugins pylint_django.checkers.db_performance \
 			--disable=line-too-long \
 			--disable=missing-docstring \
-			apps/*/*.py
+			apps/*/*.py \
+			tests/*.py
 deploy: test
-	git push origin master \
+	$(MANAGE) runserver \
+	&& git push origin master \
 	&& git push heroku master

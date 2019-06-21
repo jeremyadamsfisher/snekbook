@@ -8,7 +8,8 @@ black = "*"
 awsebcli = "*"
 pylint = "*"
 pylint-django = "*"
-pytest-django = "*"
+pytest-selenium = "*"
+selenium = "*"
 
 [packages]
 django = "==2.1.1"

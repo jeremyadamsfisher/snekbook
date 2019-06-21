@@ -1,14 +1,9 @@
 import pytest
-import django.test as dj
-from django.test import Client
-from django.urls import reverse
-import django.contrib.auth as dj_auth
-
-from .utils import translation
+from apps.snekbook.utils import translation
 
 
 @pytest.mark.parametrize(
-    "phrase,snek",
+    ("phrase", "snek"),
     [
         ("hello", "sssss"),
         ("Hello", "Sssss"),
@@ -38,20 +33,3 @@ def test_translate_allowed_phrases(phrase, snek):
 @pytest.mark.xfail(raises=translation.SnekTranslationImpossible)
 def test_illegal_translation():
     translation.to_snek("🐍s suck!")
-
-
-class Index(dj.TestCase):
-    def setUp(self):
-        self.username = "admin"
-        self.password = "123"
-        dj_auth.get_user_model().objects.create_user(
-            username=self.username, password=self.password
-        )
-
-    def test_logged_in_view_shows_users_name(self):
-        client = Client()
-        response = client.get(reverse("home"))
-        self.assertNotIn(self.username, response.content.decode("utf-8"))
-        client.login(username=self.username, password=self.password)
-        response = client.get(reverse("home"))
-        self.assertIn(self.username, response.content.decode("utf-8"))
