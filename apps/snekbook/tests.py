@@ -11,9 +11,13 @@ class Translation(ut.TestCase):
     def test_translate(self):
         # fmt: off
         for eng, snek in [
-                ("hellote", "sssssss"),
-                ("Hellote", "Sssssss"),
-                ("Hellote!", "Sssssss!"),
+                ("hello", "sssss"),
+                ("Hello", "Sssss"),
+                ("Hello!", "Sssss!"),
+                (
+                    "La difficulté d'écrire l'anglais m'est extrêmement ennuyeuse.",
+                    "Ss ssssssssss s'ssssss s'sssssss s'sss sssssssssss sssssssss."
+                ),
                 (
                     """Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.
 

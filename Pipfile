@@ -17,6 +17,7 @@ django-heroku = "*"
 psycopg2 = ">=2.7"
 gunicorn = "*"
 python-dotenv = "*"
+unidecode = "*"
 
 [requires]
 python_version = "3.6"
