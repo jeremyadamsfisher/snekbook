@@ -8,6 +8,7 @@ from .utils import translation
 
 
 class Translation(ut.TestCase):
+
     def test_translate(self):
         # fmt: off
         for eng, snek in [
@@ -34,6 +35,15 @@ class Translation(ut.TestCase):
             with self.subTest():
                 self.assertEqual(translation.to_snek(eng), snek)
         # fmt: on
+
+    def test_illegal_translation(self):
+        try:
+            translation.to_snek("🐍s suck!")
+        except translation.SnekTranslationImpossible:
+            pass
+        else:
+            raise ValueError
+
 
 
 class Index(dj.TestCase):
